@@ -16,7 +16,7 @@ resource "aws_s3_object" "object" {
 }
 
 resource "aws_lambda_function" "lambda_function" {
-  depends_on = [aws_s3_bucket_object.object]
+  depends_on = [aws_s3_object.object]
   handler = var.function_handler
   function_name = var.function_name
   role          = data.terraform_remote_state.infrastructure.outputs.lambda_role
