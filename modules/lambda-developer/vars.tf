@@ -10,8 +10,4 @@ variable "region" {}
 variable "profile" {}
 variable "project" {}
 variable "archive_sha256" {}
-variable "en_vars" {
-    type = object
-    default = {}
-}
 variable "timeout" {}

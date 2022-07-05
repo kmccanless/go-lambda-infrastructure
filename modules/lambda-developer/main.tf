@@ -25,8 +25,5 @@ resource "aws_lambda_function" "lambda_function" {
   s3_key = "${var.s3_key}/${var.archive_name}"
   timeout = var.timeout
   runtime = var.runtime
-  environment {
-    variables = var.en_vars
-  }
 }
 
