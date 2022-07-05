@@ -11,7 +11,7 @@ data "aws_ssm_parameter" "s3_bucket" {
   name = "go-lambda-bucket"
 }
 resource "aws_s3_object" "object" {
-  bucket =  data.aws_ssm_parameter.s3_bucket
+  bucket =  data.aws_ssm_parameter.s3_bucket.value
   key    = "${var.s3_key}/${var.archive_name}"
   source = var.source_archive
   etag = var.archive_md5
