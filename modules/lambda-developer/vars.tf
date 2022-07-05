@@ -11,3 +11,7 @@ variable "profile" {}
 variable "project" {}
 variable "archive_sha256" {}
 variable "timeout" {}
+variable "enable_api_gw"{
+    type = bool
+    default = false
+}

@@ -14,6 +14,19 @@ resource "aws_s3_object" "object" {
   source = var.source_archive
   etag = var.archive_md5
 }
+resource "aws_cloudwatch_log_group" "function_log_group" {
+  name              = "/aws/lambda/${aws_lambda_function.lambda-function.id}"
+  retention_in_days = 7
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+resource "aws_apigatewayv2_api" "lambda-gw" {
+  count                      = var.enable_api_gw ? 1 : 0
+  name                       = "lambda-gw"
+  protocol_type              = "HTTP"
+  target                     = "${aws_lambda_function.lambda-function.arn}"
+}
 
 resource "aws_lambda_function" "lambda_function" {
   depends_on = [aws_s3_object.object]
