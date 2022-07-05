@@ -1,0 +1,7 @@
+.tool-version
+
+**/.terraform/*
+.DS_Store
+
+*.tfstate
+*.tfstate.*
