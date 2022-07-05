@@ -33,7 +33,7 @@ resource "aws_lambda_permission" "api_gw" {
   function_name = aws_lambda_function.lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_apigatewayv2_api.lambda-gw.execution_arn}/*/*"
+  source_arn = "${aws_apigatewayv2_api.lambda-gw[0].execution_arn}/*/*"
 }
 resource "aws_lambda_function" "lambda_function" {
   depends_on = [aws_s3_object.object]
