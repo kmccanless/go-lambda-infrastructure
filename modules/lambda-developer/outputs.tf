@@ -4,3 +4,6 @@ output "lambda_name" {
 output "lambda_arn" {
   value = aws_lambda_function.lambda_function.arn
 }
+output "api_gateway_endpoint" {
+   value = aws_apigatewayv2_api.lambda-gw.api_endpoint
+}
