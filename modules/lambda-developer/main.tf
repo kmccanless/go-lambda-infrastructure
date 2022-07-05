@@ -8,7 +8,7 @@ data "terraform_remote_state" "infrastructure" {
   }
 }
 
-resource "aws_s3_bucket_object" "object" {
+resource "aws_s3_object" "object" {
   bucket = data.terraform_remote_state.infrastructure.outputs.bucket_name
   key    = "${var.s3_key}/${var.archive_name}"
   source = var.source_archive
