@@ -8,20 +8,17 @@ locals {
 resource "aws_s3_bucket" "lambda_bucket" {
   force_destroy = true
   bucket = var.s3_bucket
-  versioning {
-    enabled = true
-  }
-  lifecycle_rule {
-    enabled = true
-    noncurrent_version_expiration {
-      days = 90
-    }
-  }
-  acl = "private"
+}
+resource "aws_s3_bucket_acl" "bucket_acl" {
+  bucket = aws_s3_bucket.lambda_bucket.id
+  acl    = "private"
 }
 resource "aws_s3_bucket" "lambda_asset_bucket" {
   bucket = var.s3_asset_bucket
-  acl = "private"
+}
+resource "aws_s3_bucket_acl" "asset_bucket_acl" {
+  bucket = aws_s3_bucket.lambda_asset_bucket.id
+  acl    = "private"
 }
 resource "aws_iam_user" "lambda-developer" {
   name = "lambda-${var.environment}-developer"

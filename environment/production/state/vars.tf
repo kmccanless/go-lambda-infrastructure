@@ -8,5 +8,5 @@ variable "project" {
   default = "go-lambda"
 }
 variable "environment" {
-  default = "dev"
+  default = "production"
 }

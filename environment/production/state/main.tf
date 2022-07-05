@@ -4,7 +4,6 @@ provider "aws" {
 }
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "${var.project}-terraform-state"
- 
 }
 resource "aws_s3_bucket_acl" "bucket_acl" {
   bucket = aws_s3_bucket.terraform_state.id

@@ -5,9 +5,9 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket         = "go-lambda-terraform-state"
-    key            = "dev/terraform.tfstate"
+    key            = "dev/infrastructure/terraform.tfstate"
     region         = "us-east-2"
-    dynamodb_table = "go-lambda-terraform-locks"
+    dynamodb_table = "dev-go-lambda-terraform-locks"
     encrypt        = true
     profile        = "keith"
   }

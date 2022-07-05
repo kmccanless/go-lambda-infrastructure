@@ -2,7 +2,7 @@ data "terraform_remote_state" "infrastructure" {
   backend = "s3"
   config = {
     bucket = "${var.project}-terraform-state"
-    key    = "${var.environment}/terraform.tfstate"
+    key    = "${var.environment}/infrastructure/terraform.tfstate"
     region = "us-east-2"
     profile  = var.profile
   }
