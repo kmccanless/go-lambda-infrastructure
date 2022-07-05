@@ -5,26 +5,14 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket         = "go-lambda-terraform-state"
-    key            = "production/terraform.tfstate"
+    key            = "production/infrastructure/terraform.tfstate"
     region         = "us-east-2"
-    dynamodb_table = "go-lambda-terraform-locks"
+    dynamodb_table = "production-go-lambda-terraform-locks"
     encrypt        = true
     profile        = "keith"
   }
 }
-resource "aws_s3_bucket" "terraform_state" {
-  bucket = "${var.project}-terraform-state"
-  acl = "private"
-}
-resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "${var.project}-terraform-locks"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-}
+
 locals {
   s3_env_bucket = "${random_id.bucket.hex}-${var.s3_bucket}"
   s3_env_asset_bucket = "${random_id.bucket.hex}-${var.s3_asset_bucket}"
@@ -33,7 +21,7 @@ resource "random_id" "bucket" {
   byte_length = 5
 }
 module "lambda_infrastructure" {
-  source = "../../modules"
+  source = "../../../modules/lambda-infrastructure"
   environment = var.environment
   region = var.region
   profile = var.profile

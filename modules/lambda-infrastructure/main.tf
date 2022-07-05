@@ -9,6 +9,11 @@ resource "aws_s3_bucket" "lambda_bucket" {
   force_destroy = true
   bucket = var.s3_bucket
 }
+resource "aws_ssm_parameter" "bucket_param" {
+  name  = "go-lambda-bucket"
+  type  = "String"
+  value = aws_s3_bucket.lambda_bucket.id
+}
 resource "aws_s3_bucket_acl" "bucket_acl" {
   bucket = aws_s3_bucket.lambda_bucket.id
   acl    = "private"
