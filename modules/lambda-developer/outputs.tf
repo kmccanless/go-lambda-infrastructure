@@ -8,8 +8,8 @@ output "api_gateway_endpoint" {
    value = aws_apigatewayv2_api.lambda-gw[0].api_endpoint
 }
 output "table_arn" {
-  value = aws_dynamodb_table.dynamodb-table.arn
+  value = aws_dynamodb_table.dynamodb-table[0].arn
 }
 output "table_id" {
-  value = aws_dynamodb_table.dynamodb-table.id
+  value = aws_dynamodb_table.dynamodb-table[0].id
 }
