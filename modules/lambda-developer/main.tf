@@ -1,12 +1,12 @@
-data "terraform_remote_state" "infrastructure" {
-  backend = "s3"
-  config = {
-    bucket = "${var.project}-terraform-state"
-    key    = "${var.environment}/infrastructure/terraform.tfstate"
-    region = "us-east-2"
-    profile  = var.profile
-  }
-}
+# data "terraform_remote_state" "infrastructure" {
+#   backend = "s3"
+#   config = {
+#     bucket = "${var.project}-terraform-state"
+#     key    = "${var.environment}/infrastructure/terraform.tfstate"
+#     region = "us-east-2"
+#     profile  = var.profile
+#   }
+# }
 data "aws_ssm_parameter" "s3_bucket" {
   name = "go-lambda-bucket"
 }
@@ -36,6 +36,19 @@ resource "aws_lambda_permission" "api_gw" {
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_apigatewayv2_api.lambda-gw[0].execution_arn}/*/*"
+}
+resource "aws_dynamodb_table" "dynamodb-table" {
+  count                      = var.enable_dynamo ? 1 : 0
+  name           = var.enable_dynamo.name
+  billing_mode   = "PROVISIONED"
+  read_capacity  = var.enable_dynamo.read_capacity
+  write_capacity = var.enable_dynamo.write_capacity
+  hash_key       = "ISBN"
+
+  attribute {
+    name = "ISBN"
+    type = "S"
+  }
 }
 resource "aws_lambda_function" "lambda_function" {
   depends_on = [aws_s3_object.object]
