@@ -1,12 +1,12 @@
-# data "terraform_remote_state" "infrastructure" {
-#   backend = "s3"
-#   config = {
-#     bucket = "${var.project}-terraform-state"
-#     key    = "${var.environment}/infrastructure/terraform.tfstate"
-#     region = "us-east-2"
-#     profile  = var.profile
-#   }
-# }
+data "terraform_remote_state" "infrastructure" {
+  backend = "s3"
+  config = {
+    bucket = "${var.project}-terraform-state"
+    key    = "${var.environment}/infrastructure/terraform.tfstate"
+    region = "us-east-2"
+    profile  = var.profile
+  }
+}
 data "aws_ssm_parameter" "s3_bucket" {
   name = "go-lambda-bucket"
 }
