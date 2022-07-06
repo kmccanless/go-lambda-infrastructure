@@ -41,13 +41,13 @@ resource "aws_dynamodb_table" "dynamodb-table" {
   count                      = var.enable_dynamo ? 1 : 0
   name           = var.enable_dynamo.name
   billing_mode   = "PROVISIONED"
-  read_capacity  = var.enable_dynamo.read_capacity
-  write_capacity = var.enable_dynamo.write_capacity
-  hash_key       = "ISBN"
+  read_capacity  = 5
+  write_capacity = 5
+  hash_key       = var.enable_dynamo.hash_key
 
   attribute {
-    name = "ISBN"
-    type = "S"
+    name = var.enable_dynamo.attribute.name
+    type = var.enable_dynamo.attribute.type
   }
 }
 resource "aws_lambda_function" "lambda_function" {

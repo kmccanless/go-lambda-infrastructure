@@ -19,8 +19,6 @@ variable "enable_dynamo" {
     type = object({
         name    =  string
         hash_key    = string
-        read_capacity  = number 
-        write_capacity = number
         attribute   = object({
             name = string
             type = string
