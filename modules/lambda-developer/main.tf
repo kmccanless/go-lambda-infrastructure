@@ -34,11 +34,10 @@ resource "aws_lambda_permission" "api_gw" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
-
   source_arn = "${aws_apigatewayv2_api.lambda-gw[0].execution_arn}/*/*"
 }
 resource "aws_dynamodb_table" "dynamodb-table" {
-  count                      = var.enable_dynamo == null ? 1 : 0
+  # count          = var.enable_dynamo == null ? 1 : 0
   name           = var.enable_dynamo.name
   billing_mode   = "PROVISIONED"
   read_capacity  = 5
