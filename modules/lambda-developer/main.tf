@@ -1,3 +1,5 @@
+#TODO - Remove remote state either thru SSM params or create assets at module run time
+#TODO - Move lambda developer into its own repo?
 data "terraform_remote_state" "infrastructure" {
   backend = "s3"
   config = {

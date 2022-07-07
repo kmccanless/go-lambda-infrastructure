@@ -1,5 +1,6 @@
 data "aws_caller_identity" "current" {}
-
+#TODO - currently env_regions deploys into a region based on the environment defined from the consumer
+#of the module.  It only works in one account.  Wanted?
 locals {
   account_id = data.aws_caller_identity.current.account_id
   deployed_region = "${var.env_regions["${var.environment}"]}"

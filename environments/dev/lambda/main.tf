@@ -2,6 +2,7 @@ provider "aws" {
   region = var.region
   profile= var.profile
 }
+#TODO - Currently shares state across environments.  Is this wanted?
 terraform {
   backend "s3" {
     bucket         = "go-lambda-terraform-state"
@@ -20,6 +21,8 @@ locals {
 resource "random_id" "bucket" {
   byte_length = 5
 }
+
+#TODO - Currently one bucket for all functions per enviroment. Wanted?
 module "lambda_infrastructure" {
   source = "../../../modules/lambda-infrastructure"
   environment = var.environment
