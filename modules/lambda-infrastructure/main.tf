@@ -29,7 +29,7 @@ resource "aws_iam_user" "lambda-developer" {
   name = "lambda-${var.environment}-developer"
   path = "/"
 }
-
+#TODO - convert group to role and add permission boundary to limit new policy attachments from module
 resource "aws_iam_group" "lambda-developers" {
   name = "lambda-${var.environment}-developers"
   path = "/"
@@ -56,7 +56,9 @@ resource "aws_iam_policy" "Lambda-developer-rights" {
   policy = data.aws_iam_policy_document.lambda_developer_policy_document.json
 }
 #TODO - Disallow destroy on buckets
-#TODO - let describeparameters
+#TODO - list describeparameters. how to handle secrets? path in SSM?
+#TODO - narrow lambda permissions?
+
 data "aws_iam_policy_document" "lambda_developer_policy_document" {
   statement {
     sid = "PermissionToCreateFunction"
@@ -85,7 +87,13 @@ data "aws_iam_policy_document" "lambda_developer_policy_document" {
       "arn:aws:iam::${local.account_id}:user/lambda-developer"
     ]
   }
-
+  # statement {
+  #   sid = "Attachss3Policy"
+  #   actions = [
+  #     "iam:PutGroupPolicy"
+  #   ]
+  #   resources = [aws_iam_group.lambda-developers.arn]
+  # }
   statement {
     sid ="PassRole"
     actions = [
@@ -114,7 +122,7 @@ data "aws_iam_policy_document" "lambda_developer_policy_document" {
    statement {
     actions = [
     "iam:GetPolicy",
-      "iam:GetPolicyVersion"
+    "iam:GetPolicyVersion"
     ]
     resources = [
       aws_iam_policy.lambda_lambda_execution.arn,
