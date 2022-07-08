@@ -55,7 +55,8 @@ resource "aws_iam_policy" "Lambda-developer-rights" {
   name   = "Lambda${var.environment}Access"
   policy = data.aws_iam_policy_document.lambda_developer_policy_document.json
 }
-
+#TODO - Disallow destroy on buckets
+#TODO - let describeparameters
 data "aws_iam_policy_document" "lambda_developer_policy_document" {
   statement {
     sid = "PermissionToCreateFunction"
@@ -63,12 +64,6 @@ data "aws_iam_policy_document" "lambda_developer_policy_document" {
       "lambda:*"
     ]
     resources = ["arn:aws:lambda:${var.env_regions["${var.environment}"]}:*:function:*"]
-  }
-  statement {
-    actions = [
-    "codedeploy:DescribeParameters"
-    ]
-    resources = ["*"]
   }
   statement {
     actions = [
@@ -175,7 +170,7 @@ resource "aws_iam_policy" "lambda_lambda_execution" {
   name = "lambda_${var.environment}_execution"
   policy = data.aws_iam_policy_document.lambda_policy_data.json
 }
-
+#TODO - Make asset bucket optional
 data "aws_iam_policy_document" "lambda_policy_data" {
   statement {
     actions = [
